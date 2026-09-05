@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content="VuePress 2.0.0-rc.26" />
+    <style>
+      :root {
+        --vp-c-bg: #fff;
+      }
+
+      [data-theme='dark'] {
+        --vp-c-bg: #1b1b1f;
+      }
+
+      html,
+      body {
+        background-color: var(--vp-c-bg);
+      }
+    </style>
+    <script>
+      const useChoice = localStorage.getItem('vuepress-color-scheme')
+      const systemStatus =
+        'matchMedia' in window
+          ? window.matchMedia('(prefers-color-scheme: dark)').matches
+          : false
+
+      if (useChoice === 'light') {
+        document.documentElement.dataset.theme = 'light'
+      } else if (useChoice === 'dark' || systemStatus) {
+        document.documentElement.dataset.theme = 'dark'
+      }
+    </script>
+    <link rel="icon" href="/favicon.ico"><meta name="keywords" content="VuePress, 博客, Vue, 前端, 技术文档"><meta name="author" content="ATRULE"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Vue3 实战：解决深拷贝导致的“Maximum call stack size”与“函数丢失”问题 | ATRULE 技术博客</title><meta name="description" content="一个现代化的VuePress项目博客，支持自动化部署到GitHub Pages和Gitee Pages">
+    <link rel="preload" href="/assets/style-JKvWvDhI.css" as="style"><link rel="stylesheet" href="/assets/style-JKvWvDhI.css">
+    <link rel="modulepreload" href="/assets/app-ElaRWWOj.js"><link rel="modulepreload" href="/assets/vue3-deep-clone-solution.html-BsdTvA0j.js">
+    <link rel="prefetch" href="/assets/index.html-DEoafMb6.js" as="script"><link rel="prefetch" href="/assets/index.html-CHkXcMqY.js" as="script"><link rel="prefetch" href="/assets/index.html-BzzYI5H-.js" as="script"><link rel="prefetch" href="/assets/agent-architecture-decision-guide.html-BVVJkury.js" as="script"><link rel="prefetch" href="/assets/agent-backend-dev-notes.html-BucZ2_0Q.js" as="script"><link rel="prefetch" href="/assets/agent-engineer-learning-notes.html-BdP7zLuz.js" as="script"><link rel="prefetch" href="/assets/agent-engineer-learning-roadmap.html-BXHVk2xE.js" as="script"><link rel="prefetch" href="/assets/agent-interview-notes.html-DCAKIOuP.js" as="script"><link rel="prefetch" href="/assets/agent-llm-calling-dev-notes.html-BBsx7Ky0.js" as="script"><link rel="prefetch" href="/assets/agent-rag-retrieval-dev-notes.html-FzqNCKLc.js" as="script"><link rel="prefetch" href="/assets/agent-streaming-dev-notes.html-5qjc3ZR7.js" as="script"><link rel="prefetch" href="/assets/ai-agent-fullstack-interview.html-CUzGMogy.js" as="script"><link rel="prefetch" href="/assets/ai-travel-agent.html-DN3-zVSd.js" as="script"><link rel="prefetch" href="/assets/douyin-live-agent.html-Dsy5JWB4.js" as="script"><link rel="prefetch" href="/assets/electron-stress-test-interview.html-BUiQEBwd.js" as="script"><link rel="prefetch" href="/assets/gemini3-gpt5-deepseek3-programmer-identity.html-7SddOBCs.js" as="script"><link rel="prefetch" href="/assets/poiclaw-project-blueprint.html-w9AOMYsx.js" as="script"><link rel="prefetch" href="/assets/study-nodeai.html-CJxiAjMK.js" as="script"><link rel="prefetch" href="/assets/vuepress-guide.html-CnvYnMtN.js" as="script"><link rel="prefetch" href="/assets/index.html-CZWPEFxL.js" as="script"><link rel="prefetch" href="/assets/agent-projects-analysis.html-DMIr5u87.js" as="script"><link rel="prefetch" href="/assets/claude-code-agent-prompt.html-BZDVB-Ut.js" as="script"><link rel="prefetch" href="/assets/getting-started.html-Dzj_193S.js" as="script"><link rel="prefetch" href="/assets/github-agent-search-prompts.html-CW0258TI.js" as="script"><link rel="prefetch" href="/assets/github-project-analysis-prompt.html-BG79XKoe.js" as="script"><link rel="prefetch" href="/assets/nev-industry-analysis.html-B9HLZw27.js" as="script"><link rel="prefetch" href="/assets/trending-agents-2026-07-22.html-BLTD57x5.js" as="script"><link rel="prefetch" href="/assets/trending-agents-2026-07-24.html-Dgj5Gf2D.js" as="script"><link rel="prefetch" href="/assets/trending-agents-2026-08-24.html-C0P9zrgY.js" as="script"><link rel="prefetch" href="/assets/trending-gis-2026-07-24.html-9_VnhkOo.js" as="script"><link rel="prefetch" href="/assets/404.html-BKfUiO15.js" as="script"><link rel="prefetch" href="/assets/index-BzBQJFYZ.js" as="script">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="vp-theme-container external-link-icon" vp-container><!--[--><header class="vp-navbar" vp-navbar><div class="vp-toggle-sidebar-button" title="toggle sidebar" aria-expanded="false" role="button" tabindex="0"><div class="icon" aria-hidden="true"><span></span><span></span><span></span></div></div><span><a class="route-link" href="/"><img class="vp-site-logo" src="/logo.png" alt="ATRULE 技术博客"><span class="vp-site-name vp-hide-mobile" aria-hidden="true">ATRULE 技术博客</span></a></span><div class="vp-navbar-items-wrapper" style=""><!--[--><!--]--><nav class="vp-navbar-items vp-hide-mobile" aria-label="site navigation"><!--[--><div class="vp-navbar-item"><a class="route-link auto-link" href="/" aria-label="首页"><!--[--><!--[--><!--]--><!--]-->首页<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link route-link-active auto-link" href="/blog/" aria-label="博客"><!--[--><!--[--><!--]--><!--]-->博客<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link auto-link" href="/docs/" aria-label="文档"><!--[--><!--[--><!--]--><!--]-->文档<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link auto-link" href="/about/" aria-label="关于"><!--[--><!--[--><!--]--><!--]-->关于<!--[--><!--[--><!--]--><!--]--></a></div><!--]--></nav><!--[--><!--]--><button type="button" class="vp-toggle-color-mode-button" title="toggle color mode"><svg class="light-icon" viewbox="0 0 32 32" style=""><path d="M16 12.005a4 4 0 1 1-4 4a4.005 4.005 0 0 1 4-4m0-2a6 6 0 1 0 6 6a6 6 0 0 0-6-6z" fill="currentColor"></path><path d="M5.394 6.813l1.414-1.415l3.506 3.506L8.9 10.318z" fill="currentColor"></path><path d="M2 15.005h5v2H2z" fill="currentColor"></path><path d="M5.394 25.197L8.9 21.691l1.414 1.415l-3.506 3.505z" fill="currentColor"></path><path d="M15 25.005h2v5h-2z" fill="currentColor"></path><path d="M21.687 23.106l1.414-1.415l3.506 3.506l-1.414 1.414z" fill="currentColor"></path><path d="M25 15.005h5v2h-5z" fill="currentColor"></path><path d="M21.687 8.904l3.506-3.506l1.414 1.415l-3.506 3.505z" fill="currentColor"></path><path d="M15 2.005h2v5h-2z" fill="currentColor"></path></svg><svg class="dark-icon" viewbox="0 0 32 32" style="display:none;"><path d="M13.502 5.414a15.075 15.075 0 0 0 11.594 18.194a11.113 11.113 0 0 1-7.975 3.39c-.138 0-.278.005-.418 0a11.094 11.094 0 0 1-3.2-21.584M14.98 3a1.002 1.002 0 0 0-.175.016a13.096 13.096 0 0 0 1.825 25.981c.164.006.328 0 .49 0a13.072 13.072 0 0 0 10.703-5.555a1.01 1.01 0 0 0-.783-1.565A13.08 13.08 0 0 1 15.89 4.38A1.015 1.015 0 0 0 14.98 3z" fill="currentColor"></path></svg></button><form class="search-box" role="search"><input type="search" placeholder="搜索文档" autocomplete="off" spellcheck="false" value><!----></form></div></header><!--]--><div class="vp-sidebar-mask"></div><!--[--><aside class="vp-sidebar" vp-sidebar><nav class="vp-navbar-items" aria-label="site navigation"><!--[--><div class="vp-navbar-item"><a class="route-link auto-link" href="/" aria-label="首页"><!--[--><!--[--><!--]--><!--]-->首页<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link route-link-active auto-link" href="/blog/" aria-label="博客"><!--[--><!--[--><!--]--><!--]-->博客<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link auto-link" href="/docs/" aria-label="文档"><!--[--><!--[--><!--]--><!--]-->文档<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link auto-link" href="/about/" aria-label="关于"><!--[--><!--[--><!--]--><!--]-->关于<!--[--><!--[--><!--]--><!--]--></a></div><!--]--></nav><!--[--><!--]--><ul class="vp-sidebar-items"><!--[--><li><p tabindex="0" class="vp-sidebar-item vp-sidebar-heading">技术文章 <!----></p><ul class="vp-sidebar-children" style=""><!--[--><li><a class="route-link auto-link vp-sidebar-item" href="/blog/vuepress-guide.html" aria-label="VuePress 2.x 完全指南"><!--[--><!--[--><!--]--><!--]-->VuePress 2.x 完全指南<!--[--><!--[--><!--]--><!--]--></a><!----></li><li><a class="route-link auto-link vp-sidebar-item" href="/blog/gemini3-gpt5-deepseek3-programmer-identity.html" aria-label="Gemini3 &amp; GPT5 &amp; DeepSeek3：AI时代程序员的身份转变"><!--[--><!--[--><!--]--><!--]-->Gemini3 &amp; GPT5 &amp; DeepSeek3：AI时代程序员的身份转变<!--[--><!--[--><!--]--><!--]--></a><!----></li><li><a class="route-link auto-link vp-sidebar-item" href="/blog/agent-architecture-decision-guide.html" aria-label="Agent 架构选型指南：单智能体 vs 多智能体"><!--[--><!--[--><!--]--><!--]-->Agent 架构选型指南：单智能体 vs 多智能体<!--[--><!--[--><!--]--><!--]--></a><!----></li><li><a class="route-link auto-link vp-sidebar-item" href="/blog/agent-engineer-learning-roadmap.html" aria-label="Agent 工程师转型学习路线图 (Full-Stack to Agent Engineer)"><!--[--><!--[--><!--]--><!--]-->Agent 工程师转型学习路线图 (Full-Stack to Agent Engineer)<!--[--><!--[--><!--]--><!--]--></a><!----></li><li><a class="route-link auto-link vp-sidebar-item" href="/blog/agent-engineer-learning-notes.html" aria-label="Agent 工程师学习笔记"><!--[--><!--[--><!--]--><!--]-->Agent 工程师学习笔记<!--[--><!--[--><!--]--><!--]--></a><!----></li><li><a class="route-link auto-link vp-sidebar-item" href="/blog/agent-interview-notes.html" aria-label="📖 Agent 系统架构与工程实践面试速记卡片"><!--[--><!--[--><!--]--><!--]-->📖 Agent 系统架构与工程实践面试速记卡片<!--[--><!--[--><!--]--><!--]--></a><!----></li><li><a class="route-link auto-link vp-sidebar-item" href="/blog/agent-streaming-dev-notes.html" aria-label="Agent 流式对话前端踩坑记录"><!--[--><!--[--><!--]--><!--]-->Agent 流式对话前端踩坑记录<!--[--><!--[--><!--]--><!--]--></a><!----></li><li><a class="route-link auto-link vp-sidebar-item" href="/blog/agent-rag-retrieval-dev-notes.html" aria-label="RAG 检索工程问题记录"><!--[--><!--[--><!--]--><!--]-->RAG 检索工程问题记录<!--[--><!--[--><!--]--><!--]--></a><!----></li><li><a class="route-link auto-link vp-sidebar-item" href="/blog/agent-backend-dev-notes.html" aria-label="Agent 后端问题记录（Koa / MongoDB）"><!--[--><!--[--><!--]--><!--]-->Agent 后端问题记录（Koa / MongoDB）<!--[--><!--[--><!--]--><!--]--></a><!----></li><li><a class="route-link auto-link vp-sidebar-item" href="/blog/agent-llm-calling-dev-notes.html" aria-label="LLM 调用与 Agent 编排问题记录"><!--[--><!--[--><!--]--><!--]-->LLM 调用与 Agent 编排问题记录<!--[--><!--[--><!--]--><!--]--></a><!----></li><li><a class="route-link auto-link vp-sidebar-item" href="/blog/electron-stress-test-interview.html" aria-label="Electron 桌面端问题排查记录"><!--[--><!--[--><!--]--><!--]-->Electron 桌面端问题排查记录<!--[--><!--[--><!--]--><!--]--></a><!----></li><li><a class="route-link auto-link vp-sidebar-item" href="/blog/ai-agent-fullstack-interview.html" aria-label="AI Agent 全栈开发问题排查记录"><!--[--><!--[--><!--]--><!--]-->AI Agent 全栈开发问题排查记录<!--[--><!--[--><!--]--><!--]--></a><!----></li><!--]--></ul></li><li><p tabindex="0" class="vp-sidebar-item vp-sidebar-heading">项目实战 <!----></p><ul class="vp-sidebar-children" style=""><!--[--><li><a class="route-link auto-link vp-sidebar-item" href="/blog/douyin-live-agent.html" aria-label="Node.js + Koa 抖音直播弹幕Agent 五大核心模块（面试项目完整版，TS技术栈）★★★★★"><!--[--><!--[--><!--]--><!--]-->Node.js + Koa 抖音直播弹幕Agent 五大核心模块（面试项目完整版，TS技术栈）★★★★★<!--[--><!--[--><!--]--><!--]--></a><!----></li><li><a class="route-link auto-link vp-sidebar-item" href="/blog/poiclaw-project-blueprint.html" aria-label="Poiclaw 项目蓝图：自主编程实体"><!--[--><!--[--><!--]--><!--]-->Poiclaw 项目蓝图：自主编程实体<!--[--><!--[--><!--]--><!--]--></a><!----></li><li><a class="route-link auto-link vp-sidebar-item" href="/blog/ai-travel-agent.html" aria-label="AI旅行助手"><!--[--><!--[--><!--]--><!--]-->AI旅行助手<!--[--><!--[--><!--]--><!--]--></a><!----></li><!--]--></ul></li><!--]--></ul><!--[--><!--]--></aside><!--]--><!--[--><main class="vp-page"><!--[--><!--]--><div vp-content><!--[--><!--]--><div id="content"><hr><h1 id="vue3-实战-解决深拷贝导致的-maximum-call-stack-size-与-函数丢失-问题" tabindex="-1"><a class="header-anchor" href="#vue3-实战-解决深拷贝导致的-maximum-call-stack-size-与-函数丢失-问题"><span>Vue3 实战：解决深拷贝导致的“Maximum call stack size”与“函数丢失”问题</span></a></h1><p>在 Vue3 项目开发中，我们经常会遇到需要深度克隆（Deep Clone）响应式对象的情况。传统的 <code>lodash.cloneDeep</code> 或 <code>JSON.parse(JSON.stringify())</code> 在面对复杂业务场景时，经常会触发以下两个痛点：</p><ol><li><strong>RangeError: Maximum call stack size exceeded</strong>：由于对象中存在循环引用（Circular Reference）或嵌套过深。</li><li><strong>TypeError: xxx is not a function</strong>：克隆后的对象丢失了原对象原型链上的方法（例如第三方插件实例的方法）。</li></ol><p>本文将分享一个高度自定义的 <code>deepSafeClone</code> 工具函数，支持<strong>手动脱壳（toRaw）</strong>、<strong>防循环引用</strong>、以及<strong>原型方法自动补全</strong>。</p><h2 id="核心代码实现" tabindex="-1"><a class="header-anchor" href="#核心代码实现"><span>核心代码实现</span></a></h2><p>你可以将以下代码直接复制到你的工具类文件（如 <code>utils/clone.js</code>）中：</p><p>JavaScript</p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code class="language-text"><span class="line">/**</span>
+<span class="line"> * 深度安全克隆 (支持 Vue3 toRaw、防循环引用、保留原型方法)</span>
+<span class="line"> * @param {Object} obj - 要克隆的目标对象</span>
+<span class="line"> * @param {Function} myRaw - 外部传入的脱壳函数 (如 Vue3 的 toRaw)</span>
+<span class="line"> * @param {WeakMap} hash - 用于处理循环引用，内部递归使用</span>
+<span class="line"> */</span>
+<span class="line">export function deepSafeClone(obj, myRaw = (v) =&gt; v, hash = new WeakMap()) {</span>
+<span class="line">  // 1. 处理基本类型、null 以及 undefined</span>
+<span class="line">  if (obj === null || typeof obj !== &#39;object&#39;) {</span>
+<span class="line">    return obj;</span>
+<span class="line">  }</span>
+<span class="line"></span>
+<span class="line">  // 2. 防御循环引用：如果该对象已经处理过，直接返回对应的副本</span>
+<span class="line">  // 解决 &quot;Maximum call stack size exceeded&quot; 的核心逻辑</span>
+<span class="line">  if (hash.has(obj)) {</span>
+<span class="line">    return hash.get(obj);</span>
+<span class="line">  }</span>
+<span class="line"></span>
+<span class="line">  // 3. 使用传入的 myRaw 函数脱掉响应式外壳 (防止 Proxy 递归导致的溢出)</span>
+<span class="line">  const rawObj = myRaw(obj);</span>
+<span class="line"></span>
+<span class="line">  // 4. 特殊内置对象处理</span>
+<span class="line">  if (rawObj instanceof Date) return new Date(rawObj);</span>
+<span class="line">  if (rawObj instanceof RegExp) return new RegExp(rawObj.source, rawObj.flags);</span>
+<span class="line"></span>
+<span class="line">  // 5. 函数处理：保持引用以防止 &quot;is not a function&quot; 报错</span>
+<span class="line">  if (typeof rawObj === &#39;function&#39;) {</span>
+<span class="line">    return rawObj;</span>
+<span class="line">  }</span>
+<span class="line"></span>
+<span class="line">  // 6. 安全过滤：跳过 DOM 节点和 Window 等全局对象</span>
+<span class="line">  if (rawObj instanceof Node || rawObj === window) {</span>
+<span class="line">    return undefined;</span>
+<span class="line">  }</span>
+<span class="line"></span>
+<span class="line">  // 7. 初始化容器 (区分数组和对象)</span>
+<span class="line">  const clone = Array.isArray(rawObj) ? [] : {};</span>
+<span class="line">  </span>
+<span class="line">  // 记录引用映射</span>
+<span class="line">  hash.set(obj, clone);</span>
+<span class="line"></span>
+<span class="line">  // 8. 深度递归遍历自身属性</span>
+<span class="line">  const keys = Object.keys(rawObj);</span>
+<span class="line">  for (const key of keys) {</span>
+<span class="line">    try {</span>
+<span class="line">      const value = rawObj[key];</span>
+<span class="line">      // 递归调用，持续透传 myRaw 和 hash</span>
+<span class="line">      clone[key] = deepSafeClone(value, myRaw, hash);</span>
+<span class="line">    } catch (err) {</span>
+<span class="line">      console.warn(`[DeepClone] 属性 ${key} 读取失败，已跳过:`, err);</span>
+<span class="line">    }</span>
+<span class="line">  }</span>
+<span class="line"></span>
+<span class="line">  // 9. 原型链补全：解决某些实例方法（如 getCurrentState）丢失的问题</span>
+<span class="line">  if (!Array.isArray(rawObj)) {</span>
+<span class="line">    const proto = Object.getPrototypeOf(rawObj);</span>
+<span class="line">    // 如果原型上存在业务方法，且当前克隆对象没有，则进行挂载</span>
+<span class="line">    if (proto &amp;&amp; proto !== Object.prototype) {</span>
+<span class="line">      // 针对特定方法的补齐逻辑</span>
+<span class="line">      if (typeof proto.getCurrentState === &#39;function&#39; &amp;&amp; !clone.getCurrentState) {</span>
+<span class="line">        // 使用 bind 确保调用时 this 指向正确</span>
+<span class="line">        clone.getCurrentState = proto.getCurrentState.bind(rawObj);</span>
+<span class="line">      }</span>
+<span class="line">      </span>
+<span class="line">      /* // 如果需要更激进的原型恢复，可以开启下方代码：</span>
+<span class="line">      Object.setPrototypeOf(clone, proto); </span>
+<span class="line">      */</span>
+<span class="line">    }</span>
+<span class="line">  }</span>
+<span class="line"></span>
+<span class="line">  return clone;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="在-vue3-中的使用方式" tabindex="-1"><a class="header-anchor" href="#在-vue3-中的使用方式"><span>在 Vue3 中的使用方式</span></a></h2><p>JavaScript</p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code class="language-text"><span class="line">import { toRaw } from &#39;vue&#39;;</span>
+<span class="line">import { deepSafeClone } from &#39;@/utils/clone&#39;;</span>
+<span class="line"></span>
+<span class="line">const originalData = { /* 响应式数据或复杂实例 */ };</span>
+<span class="line"></span>
+<span class="line">// 传入 toRaw 作为第二个参数，确保彻底切断响应式追踪</span>
+<span class="line">const newCopy = deepSafeClone(originalData, toRaw);</span>
+<span class="line"></span>
+<span class="line">// 此时 newCopy.getCurrentState() 可以正常调用</span>
+<span class="line"></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="为什么这个版本更强大" tabindex="-1"><a class="header-anchor" href="#为什么这个版本更强大"><span>为什么这个版本更强大？</span></a></h2><h3 id="_1-彻底解决递归溢出" tabindex="-1"><a class="header-anchor" href="#_1-彻底解决递归溢出"><span>1. 彻底解决递归溢出</span></a></h3><p>通过 <code>WeakMap</code> 记录每一个处理过的对象地址。当递归遇到循环引用时，直接从 Map 中取出已有的副本，不会陷入无限循环。</p><h3 id="_2-解决-vue3-proxy-干扰" tabindex="-1"><a class="header-anchor" href="#_2-解决-vue3-proxy-干扰"><span>2. 解决 Vue3 Proxy 干扰</span></a></h3><p>Vue3 的响应式对象是 Proxy。在深拷贝时，如果直接操作 Proxy，可能会触发多余的 <code>getter</code>。通过参数化传入 <code>toRaw</code>，我们在每一层递归都优先获取原始数据，既提高了性能又增加了稳定性。</p><h3 id="_3-原型方法-精准降级" tabindex="-1"><a class="header-anchor" href="#_3-原型方法-精准降级"><span>3. 原型方法“精准降级”</span></a></h3><p>很多第三方库的对象（如编辑器、地图、图表配置）将方法定义在原型上。普通的克隆会只拷贝数据而丢失方法。我们在函数末尾加入了原型检查，发现 <code>getCurrentState</code> 等关键函数缺失时，会自动通过 <code>.bind()</code> 重新挂载，确保克隆后的对象“功能完备”。</p><hr><p><strong>希望这篇文章能帮你解决深拷贝的各种坑！如果有更复杂的实例克隆需求，欢迎在评论区讨论。</strong></p><hr><blockquote><p><strong>💡 小提示</strong>：如果你的业务场景中，<code>getCurrentState</code> 内部需要修改克隆后的数据，建议将 <code>.bind(rawObj)</code> 改为 <code>.bind(clone)</code>。</p></blockquote></div><!--[--><!--]--></div><footer class="vp-page-meta"><!----><div class="vp-meta-item git-info"><div class="vp-meta-item last-updated"><span class="meta-item-label">最后更新: </span><time class="meta-item-info" datetime="2026-03-23T12:48:17.000Z" data-allow-mismatch>2026/3/23 20:48</time></div><!----></div></footer><!----><!--[--><!--]--></main><!--]--></div><!--[--><!----><!--]--><!--]--></div>
+    <script type="module" src="/assets/app-ElaRWWOj.js" defer></script>
+  </body>
+</html>
